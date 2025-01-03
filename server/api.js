@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.get('/users', (req, res)=>{
      mongoClient.connect(conString).then(clientObj=>{
-          var database = clientObj.db("todo");
+          var database = clientObj.db("dr");
           database.collection("users").find({}).toArray().then(documents=>{
               res.send(documents);
               res.end();
@@ -22,7 +22,7 @@ app.get('/users', (req, res)=>{
 
 app.get('/get-appointments/:userid', (req, res)=>{
     mongoClient.connect(conString).then(clientObj=>{
-         var database = clientObj.db("todo");
+         var database = clientObj.db("dr");
          database.collection("appointments").find({UserId:req.params.userid}).toArray().then(documents=>{
              res.send(documents);
              res.end();
@@ -32,7 +32,7 @@ app.get('/get-appointments/:userid', (req, res)=>{
 
 app.get('/get-appointment/:id', (req, res)=>{
     mongoClient.connect(conString).then(clientObj=>{
-         var database = clientObj.db("todo");
+         var database = clientObj.db("dr");
          database.collection('appointments').findOne({AppointmentId:parseInt(req.params.id)}).then(document=>{
              res.send(document);
              res.end();
@@ -51,7 +51,7 @@ app.post('/register-user', (req, res)=>{
      }
 
      mongoClient.connect(conString).then(clientObj=>{
-          var database = clientObj.db("todo");
+          var database = clientObj.db("dr");
           database.collection('users').insertOne(user).then(()=>{
              console.log('User Registered..');
              res.end();
@@ -71,7 +71,7 @@ app.post('/add-appointment', (req, res)=>{
     }
 
     mongoClient.connect(conString).then(clientObj=>{
-         var database = clientObj.db("todo");
+         var database = clientObj.db("dr");
          database.collection('appointments').insertOne(appointment).then(()=>{
             console.log('Appointment Added..');
             res.end();
@@ -92,7 +92,7 @@ app.put('/edit-appointment/:id', (req, res)=>{
     }
 
     mongoClient.connect(conString).then(clientObj=>{
-         var database = clientObj.db("todo");
+         var database = clientObj.db("dr");
          database.collection('appointments').updateOne({AppointmentId:parseInt(req.params.id)},{$set:appointment}).then(()=>{
             console.log('Appointment Updated..');
             res.end();
@@ -103,7 +103,7 @@ app.put('/edit-appointment/:id', (req, res)=>{
 app.delete('/delete-appointment/:id', (req, res)=>{
 
     mongoClient.connect(conString).then(clientObj=>{
-         var database = clientObj.db("todo");
+         var database = clientObj.db("dr");
          database.collection('appointments').deleteOne({AppointmentId:parseInt(req.params.id)}).then(()=>{
             console.log('Appointment Deleted..');
             res.end();
